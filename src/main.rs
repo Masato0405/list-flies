@@ -4,8 +4,10 @@ use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
 
 fn main() {
+    // 引数を取得
     let args: Vec<String> = env::args().collect();
 
+    // もし引数が指定されていなければカレントディレクトリを使用
     let dir = if args.len() > 1 {
         &args[1]
     } else {
@@ -19,6 +21,9 @@ fn list_files(dir:  &str) {
     let path = Path::new(dir);
 
     let entries = fs::read_dir(path).expect("Could not read directory");
+
+    // ヘッダーを表示
+    println!("{:<10} {:<10} {:<20} {}", "Permissions", "Size", "Modified", "Name");
 
     for entry in entries {
         let entry = entry.expect("Error reading etnry");
