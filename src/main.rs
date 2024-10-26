@@ -1,16 +1,24 @@
 use std::fs;
 use std::env;
 use std::os::unix::fs::PermissionsExt;
+use std::path::Path;
 
 fn main() {
-    list_files();
+    let args: Vec<String> = env::args().collect();
+
+    let dir = if args.len() > 1 {
+        &args[1]
+    } else {
+        "."
+    };
+
+    list_files(dir);
 }
 
-fn list_files() {
-    // カレントディレクトリを取得
-    let current_dir = env::current_dir().expect("Could not get current directory");
+fn list_files(dir:  &str) {
+    let path = Path::new(dir);
 
-    let entries = fs::read_dir(&current_dir).expect("Could not read directory");
+    let entries = fs::read_dir(path).expect("Could not read directory");
 
     for entry in entries {
         let entry = entry.expect("Error reading etnry");
