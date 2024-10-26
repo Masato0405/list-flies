@@ -32,7 +32,7 @@ fn list_files(dir:  &str) {
         // パーミッション取得
         let permissions = metadata.permissions().mode();
         // ファイルサイズ取得
-        let file_size = metadata.len();
+        let file_size = format_file_size(metadata.len());
         // ファイルの最終更新日時
         let modified = metadata.modified().expect("Could not get modified time");
         let datetime: chrono::DateTime<chrono::Local> = modified.into();
@@ -48,5 +48,21 @@ fn list_files(dir:  &str) {
                 file_name
             );
         }
+    }
+}
+
+fn format_file_size(size: u64) -> String {
+    const KB: u64 = 1024;
+    const MB: u64 = KB * 1024;
+    const GB: u64 = MB * 1024;
+
+    if size < KB {
+        format!("{} B", size)
+    } else if size < MB {
+        format!("{:.2} KB", size as f64 / KB as f64)
+    } else if size < GB {
+        format!("{:.2} MB", size as f64 / MB as f64)
+    } else {
+        format!("{:.2} GB", size as f64 / GB as f64)
     }
 }
