@@ -30,7 +30,7 @@ fn list_files(dir:  &str) {
         let metadata = entry.metadata().expect("Could not read metadata");
 
         // パーミッション取得
-        let permissions = metadata.permissions().mode();
+        let permissions = format_permissions(&metadata);
         // ファイルサイズ取得
         let file_size = format_file_size(metadata.len());
         // ファイルの最終更新日時
@@ -41,7 +41,7 @@ fn list_files(dir:  &str) {
 
         if let Some(file_name) = entry.file_name().to_str() {
             println!(
-                "{:o} {:<10} {:<20} {}", 
+                "{:11} {:<10} {:<20} {}", 
                 permissions,
                 file_size,
                 formatted_time,
@@ -49,6 +49,40 @@ fn list_files(dir:  &str) {
             );
         }
     }
+}
+
+fn format_permissions(metadata: &std::fs::Metadata) -> String {
+    let mode = metadata.permissions().mode();
+    let file_type = if metadata.is_dir() {
+        'd'
+    } else if metadata.is_symlink() {
+        'l'
+    } else {
+        '-'
+    };
+
+    let owner = format!(
+        "{}{}{}",
+        if mode & 0o400 != 0 { 'r' } else { '-' },
+        if mode & 0o200 != 0 { 'w' } else { '-' },
+        if mode & 0o100 != 0 { 'x' } else { '-' }
+    );
+
+    let group = format!(
+        "{}{}{}",
+        if mode & 0o040 != 0 { 'r' } else { '-' },
+        if mode & 0o020 != 0 { 'w' } else { '-' },
+        if mode & 0o010 != 0 { 'x' } else { '-' }
+    );
+
+    let others = format!(
+        "{}{}{}",
+        if mode & 0o004 != 0 { 'r' } else { '-' },
+        if mode & 0o002 != 0 { 'w' } else { '-' },
+        if mode & 0o001 != 0 { 'x' } else { '-' }
+    );
+
+    format!("{}{}{}{}", file_type, owner, group, others)
 }
 
 fn format_file_size(size: u64) -> String {
