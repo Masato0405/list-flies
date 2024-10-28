@@ -10,7 +10,7 @@ A simple CLI tool built with Rust to list files in a specified directory, showin
 
 ## Installation
 ```
-curl -sL https://github.com/yourusername/yourrepository/releases/download/v0.1.0/lf -o /usr/local/bin/lf
+curl -sL https://github.com/yMasato0405/list-flies/edit/master/lf -o /usr/local/bin/lf
 chmod +x /usr/local/bin/lf
 ```
 
