@@ -8,20 +8,28 @@ A simple CLI tool built with Rust to list files in a specified directory, showin
 - Supports viewing hidden files.
 - Can specify a directory or use the current directory by default.
 
+## Installation
+```
+curl -sL https://github.com/yourusername/yourrepository/releases/download/v0.1.0/lf -o /usr/local/bin/lf
+chmod +x /usr/local/bin/lf
+```
+
 ## Usage
-cargo run /path/to/directory
+`lf [directory]`
+
+If [directory] is not specified, the current directory will be used.
+The output includes file permissions, size (with units), last modified date, and file name.
 
 ## Example
 
 ```bash
-$ cargo run             
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
-     Running `target/debug/list-files`
-100644 99         2024-10-26 21:52:23  Cargo.toml
-40755 192        2024-10-26 22:35:50  target
-100644 8260       2024-10-26 20:15:26  Cargo.lock
-100644 408        2024-10-26 22:44:08  README.md
-100644 8          2024-10-26 19:16:00  .gitignore
-40755 384        2024-10-26 22:35:26  .git
-40755 96         2024-10-26 19:16:00  src
+Permissions Size       Modified             Name
+-rw-r--r--  140 B      2024-10-28 14:59:42  Cargo.toml
+drwxr-xr-x  192 B      2024-10-28 14:53:31  target
+-rw-r--r--  8.07 KB    2024-10-26 20:15:26  Cargo.lock
+-rw-r--r--  895 B      2024-10-27 00:21:03  README.md
+-rw-r--r--  8 B        2024-10-26 19:16:00  .gitignore
+drwxr-xr-x  384 B      2024-10-28 15:29:35  .git
+-rwxr-xr-x  517.48 KB  2024-10-28 14:54:45  lf
+drwxr-xr-x  96 B       2024-10-26 19:16:00  src
 ```
