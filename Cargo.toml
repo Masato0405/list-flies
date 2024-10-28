@@ -5,3 +5,7 @@ edition = "2021"
 
 [dependencies]
 chrono = "0.4.38"
+
+[[bin]]
+name = "lf"
+path = "src/main.rs"
